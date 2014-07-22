@@ -1,0 +1,138 @@
+clearscreen.
+
+print "    ##         ###     #####     ##            ".
+print "    ##        ## ##   ##   ##                  ".
+print "    ##  ##   ##   ##  ##       ####      ##### ".
+print "    ## ##    ##   ##   #####     ##     ##     ".
+print "    ####     ##   ##       ##    ##      ####  ".
+print "    ## ##     ## ##   ##   ##    ##         ## ".
+print "    ##  ##     ###     #####   ######   #####  ".
+print " ".
+print "            k-OS Initialisation System".
+print " ".
+print "    kOS v"+version.
+print "kOSis v1.3.5" at (34,10).
+print " ".
+print vesselname.
+
+switch to 1.
+
+boot on.
+log "toggle boot." to test_boot.
+run test_boot.
+delete test_boot.
+
+if boot {
+	if reboot <> 0 {
+		if reboot = 1 {
+			list.
+			print "Proceed.".
+			print " ".
+		} else {
+			set reboot to "Runing autorun program:".
+			run tmp.
+			set reboot to 2.
+			print "Program ended.".
+		}
+	} else {
+		log "toggle boot." to test_boot.
+	}	
+} else {
+	set reboot to 0.
+}
+
+if reboot = 0 {
+
+set file0 to "delete boot.".
+set file5 to "boot".
+set file1 to "copy ".
+set file2 to " from 0.rename file ".
+set file3 to " to ".
+set file4 to ".".
+set vol1 to "list.".
+set vol2 to "rename volume ".
+set vol3 to " to ".
+set vol4 to ".switch to ".
+set vol5 to ".".
+set ps1 to "set ".
+set ps2 to " to ".
+set ps3 to ".".
+set init1 to "copy ".
+set init2 to " from 0.run ".
+set init3 to ".delete ".
+set init4 to ".".
+
+log "declare parameter n.if n = vesselname {rs on.} else rs off." to ship.
+log "declare parameter n.if rs{if not v=0 log vol1 to tmp.set v to v+1.log vol2+v+vol3+n+vol4+v+vol5 to tmp.if not v=1 and ps {copy presets from 1.copy kosis_preset_boot from 0.delete boot.rename kosis_preset_boot to boot.}}" to volume.
+if boot {
+	log "declare parameter an,sn.if rs {if sn=file5 log file0 to tmp.log file1+an+file2+an+file3+sn+file4 to tmp.}" to file.
+} else {
+	log "declare parameter an,sn.if rs log file1+an+file2+an+file3+sn+file4 to tmp." to file.
+}
+log "declare parameter n,f.if rs {set af to f.set av to n.}" to autorun.
+log "declare parameter n,c.if rs {log ps1+n+ps2+c+ps3 to presets.ps on.}" to preset.
+log "declare parameter f.if rs log init1+f+init2+f+init3+f+init4 to tmp." to init.
+
+ps off.
+rs on.
+set v to 0.
+set av to 1.
+set af to "".
+
+log "delete tmp." to tmp.
+switch to 0.
+run kosis_cfg.
+log "list." to tmp.
+
+delete ship.
+delete volume.
+delete file.
+delete autorun.
+delete preset.
+delete init.
+
+if ps and boot {
+	log "run presets." to boot.
+	rename boot to kosis_preset_boot.
+	copy kosis_preset_boot to 0.
+	rename kosis_preset_boot to boot.
+}
+
+run tmp.
+switch to 1.
+
+if boot {
+	if ps delete kosis_preset_boot from 0.
+
+	toggle ag10.
+	wait 0.001.
+	toggle ag10.
+
+	switch to 1.
+	rename boot to kosis_old_boot.
+	copy kosis_old_boot to 0.
+	rename kosis_old_boot to boot.
+	if af = "" {set reboot to 1.} else set reboot to 2.
+	log "delete boot.copy kosis_old_boot from 0.rename kosis_old_boot to boot.delete kosis_old_boot from 0.set reboot to "+reboot+".switch to 0.run kosis." to boot.
+	if af <> "" {
+		log "delete tmp." to tmp.
+		set i to 1.
+		if v = 0 set v to 1.
+		until i > v {
+			log "switch to "+i+".list." to tmp.
+			set i to i + 1.
+		}
+		log "print reboot.switch to "+av+".run "+af+"." to tmp.
+	}
+	reboot.
+} else {
+	if ps run presets.
+	if af <> "" {
+		print "run "+af+".".
+		log "delete tmp2.switch to "+av+".run "+af+"." to tmp2.
+		run tmp2.
+		switch to 1.
+	}
+}
+
+}

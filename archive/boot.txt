@@ -1,0 +1,20 @@
+// boot for kOSis v1.3.5
+delete boot from 1.
+if config:arch {
+print "BOOT ERROR:".
+print "Can not be run with archive as starting volume!".
+print "Type 'run kosis.' to start the initialisation".
+print "   manualy.".
+print " ".
+switch to 0.
+} else {
+copy kosis_boot from 0.
+rename kosis_boot to boot.
+ag10 on.
+wait 0.001.
+toggle ag10.
+log "toggle boot." to test_boot.
+set reboot to 0.
+switch to 0.
+run kosis.
+}

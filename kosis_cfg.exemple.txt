@@ -1,0 +1,30 @@
+// This is an exemple config file for kOSis. It is not meant to be used but
+// simply to show how it is supposed to be used. A explanation of what it does
+// is present in the README.md file.
+
+switch to 1. // DO NOT REMOVE! Write your configs below.
+
+run PRESET("ksc", geoposition).
+run INIT("toolkit").
+
+run SHIP("My SSTO").
+	run AUTORUN("myssto", "takeoff").
+	run PRESET("sstospClimbPitch", 30).
+	run PRESET("sstospLevelAlt", 20000).
+	run PRESET("sstospLevelPitch", 15).
+	run PRESET("sstospRocketPitch", 45).
+	run VOLUME("myssto").
+		run INIT("plane_toolkit").
+		run INIT("space_toolkit").
+		run FILE("myssto_takeoff", "takeoff").
+
+run SHIP("My Satelite").
+	run AUTORUN("launcher", "launch").
+	run PRESET("orbitAltitude", 500).
+	run PRESET("orbitInclination", 85).
+	run VOLUME("launcher").
+		run FILE("launcher_launch", "lanch").
+		run INTI("space_toolkit").
+	run VOLUME("mysatelite").
+		run FILE("satelite_mainscript","boot").
+		run INTI("space_toolkit").
