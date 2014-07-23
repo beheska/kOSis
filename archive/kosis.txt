@@ -11,7 +11,7 @@ print " ".
 print "            k-OS Initialisation System".
 print " ".
 print "    kOS v"+version.
-print "kOSis v1.3.5" at (34,10).
+print "kOSis v1.3.6" at (34,10).
 print " ".
 print vesselname.
 
@@ -31,7 +31,7 @@ if boot {
 		} else {
 			set reboot to "Runing autorun program:".
 			run tmp.
-			swith to 1.
+			switch to 1.
 			set reboot to 2.
 			print "Program ended.".
 		}
