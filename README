@@ -15,7 +15,7 @@
 @ Table of contents @
 @@@@@@@@@@@@@@@@@@@@@
 
-I.     Sumary
+I.     Summary
 
 II.    Install and basic usage
 
@@ -26,24 +26,24 @@ IV.    Config file description
  IV.1.  Global section
  IV.2.  Ship section
  IV.3.  Volume section
- IV.4.  Exemple
+ IV.4.  Example
 
 @@@@@@@@@@
 @ README @
 @@@@@@@@@@
 
-I. SUMARY
+I. SUMMARY
 
     kOSis is a bootloader for k-OS. It uses a single config file to determine
-whitch programs to copy before launch to the craft on the pad. It can benefit
-form the boot functionality present in kOS v0.13+ or be run manualy.
+which programs to copy before launch to the craft on the pad. It can benefit
+from the boot functionality present in kOS v0.13+ or be run manually.
 
 II. INSTALL AND BASIC USAGE
 
     Copy the content of the "archive" folder to the kOS archive. If you don't
 want to use the automated boot, do not copy boot.txt and kosis_boot.txt.
     To use kOSis with the boot feature, simply launch a configured craft. To
-run it manualy, type `switch to 0.run kosis.` or configure kOS to start from
+run it manually, type `switch to 0.run kosis.` or configure kOS to start from
 the archive and only type `run kOSis`.
 
 III. LIST OF FUNCTIONALITIES
@@ -61,32 +61,32 @@ III. LIST OF FUNCTIONALITIES
 
 - Files copied from the archive to the craft are renamed. That way, it is
   possible to take "mycraft_launch" from the archive and it will be known simply
-  as "launch" localy.
+  as "launch" locally.
 
 - The master CPU can run a program copied to the craft (on any local volume)
-  after initialisation. Usefull for launch scripts. At the end of the execution,
+  after initialisation. Useful for launch scripts. At the end of the execution,
   the active volume will always be the one attached to the master CPU.
 
 - A "presets" program can be created that will initialise some variables when
   run. Presets are global to the craft: the program is the same on all volumes.
 
-- It is possible to run supplementary initialisation programs, typicaly to copy
+- It is possible to run supplementary initialisation programs, typically to copy
   several related programs. This is done separately for each volume. These
   programs are run from the local volume, so use `copy foo from 0`.
 
-- It is possible to have some general initialisation aplaying to all crafts.
+- It is possible to have some general initialisation applying to all crafts.
   Volume specific commands such as file copying are assumed to concern the
   master volume.
 
 III.1. BOOT ONLY
 
 - Action group 0 (ag10) is used to differentiate between master and slaves.
-  You MUST assign it to "toogle power" on all kOS parts but one: these will be
+  You MUST assign it to "toggle power" on all kOS parts but one: these will be
   the slaves during the initialisation. This action group CAN NOT be used for
   anything else even if there is only one CPU on the craft. The only accepted
-  ecception is to open the terminal of the master CPU.
+  exception is to open the terminal of the master CPU.
 
-- It is possible to overide the "boot" file on any volume. The "boot" program
+- It is possible to override the "boot" file on any volume. The "boot" program
   of each volume will be executed once kOSis is done. One exception: if a local
   program is specified to be run after the initialisation, it will be run
   instead, but only at launch.
@@ -102,7 +102,7 @@ IV. CONFIG FILE DESCRIPTION
 program run during the initialisation so it follows kOS syntax. It uses custom
 programs that are created and deleted by the main kOSis executable. These
 commands can not be used anywhere else than the config file. There is no size
-limitation for the file (it is not copied to a local volumne). It is possible
+limitation for the file (it is not copied to a local volume). It is possible
 to create subprograms and run then form then main config file.
     The first line of "kosis_cfg.txt"("switch to 1.") should in no case be
 modified. Just write your configurations bellow it.
@@ -120,12 +120,12 @@ IV.2. SHIP SECTION
   one in the VAB or SPH (case sensitive, ...).
 
 - run AUTORUN("volume_name", "file_name").
-  Specify whitch program to run after the initialistaion. Both names must match
+  Specify which program to run after the initialisation. Both names must match
   a file defined later.
 
 - run PRESET("variable_name", variable_value).
   Initialise a variable in the "presets" program. The value can not be a
-  string. The "presets" should not be writen to by another mean.
+  string. The "presets" should not be written to by another mean.
 
 IV.3. VOLUME SECTION
 
@@ -137,7 +137,7 @@ IV.3. VOLUME SECTION
 
 - run FILE("archive_filename", "local_filename").
   Takes the program "archive_filename" on the archive and copy is as
-  "local_filename" on the volume being cofigured. It is not possible to overide
+  "local_filename" on the volume being configured. It is not possible to override
   an already copied file (except for boot).
 
 - run INIT("filename").
@@ -145,9 +145,9 @@ IV.3. VOLUME SECTION
   remove it. This program can not use the commands defined here but is intended
   to copy files.
 
-Iv.4. EXEMPLE
+Iv.4. EXAMPLE
 
-    This is an exemple config file for kOSis. It is not meant to be used but
+    This is an example config file for kOSis. It is not meant to be used but
 simply to show how it is supposed to be used. A striped down version (without
 comments) is provided as kosis_cfg.exemple.txt.
 
@@ -159,7 +159,7 @@ run PRESET("ksc", geoposition).
 // some basic tools are copied to all crafts
 run INIT("toolkit").
 
-// let's configure a spaceplane
+// start a ship section
 run SHIP("My SSTO").
 	// automated takeoff at the end of the initialisation
 	run AUTORUN("myssto", "takeoff").
@@ -168,7 +168,7 @@ run SHIP("My SSTO").
 	run PRESET("sstospLevelAlt", 20000).
 	run PRESET("sstospLevelPitch", 15).
 	run PRESET("sstospRocketPitch", 45).
-	// the craft contains only one volume
+	// start of a volume section
 	run VOLUME("myssto").
 		// atmospheric flight tools
 		run INIT("plane_toolkit").
@@ -177,24 +177,24 @@ run SHIP("My SSTO").
 		// takeoff script
 		run FILE("myssto_takeoff", "takeoff").
 
-// let's configure a rocket and satelite
-run SHIP("My Satelite").
+// start another ship section
+run SHIP("My Satellite").
 	// automated launch at the end of the initialisation
 	run AUTORUN("launcher", "launch").
-	// orbitals parameters
+	// orbital parameters
 	run PRESET("orbitAltitude", 500).
 	run PRESET("orbitInclination", 85).
-	// the master CPU is on the laucher
+	// start of the master volume section
 	run VOLUME("launcher").
 		// launch script
-		run FILE("launcher_launch", "lanch").
+		run FILE("launcher_launch", "launch").
 		// orbital maneuvers tools
-		run INTI("space_toolkit").
-	// there is another CPU on the satelite
-	// kOSis considers it a slave
-	run VOLUME("mysatelite").
-		// satelite main script as boot program
-		run FILE("satelite_mainscript","boot").
+		run INIT("space_toolkit").
+	// start of a slave volume section
+	run VOLUME("mysatellite").
+		// payload main script as boot program
+		run FILE("satellite_mainscript","boot").
 		// orbital maneuvers tools
-		run INTI("space_toolkit").
-		// the basic tools are not copied to 
+		run INIT("space_toolkit").
+		// the basic tools are not copied to the slave volume
+		run INIT("toolkit").
