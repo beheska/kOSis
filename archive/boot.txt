@@ -1,4 +1,4 @@
-// boot for kOSis v1.3.6
+// boot for kOSis v1.3.7
 delete boot from 1.
 if config:arch {
 	print "BOOT ERROR:".
@@ -15,7 +15,6 @@ if config:arch {
 
 	toggle ag10.
 	log "toggle boot." to test_boot.
-	set reboot to 0.
 	switch to 0.
-	run kosis.
+	run kosis(0).
 }

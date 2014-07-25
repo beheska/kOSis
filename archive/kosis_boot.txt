@@ -1,1 +1,1 @@
-print"kOS Initialisation System"at(25,0).print"kOSis v1.3.6"at(38,1).print vesselname at(0,3).list.print"Proceed.".print" ".
+print"kOS Initialisation System"at(25,0).print"kOSis v1.3.7"at(38,1).print vesselname at(0,3).list.print"Proceed.".print" ".

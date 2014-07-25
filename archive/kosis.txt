@@ -11,7 +11,7 @@ print " ".
 print "            k-OS Initialisation System".
 print " ".
 print "    kOS v"+version.
-print "kOSis v1.3.6" at (34,10).
+print "kOSis v1.3.7" at (34,10).
 print " ".
 print vesselname.
 
@@ -23,26 +23,30 @@ run test_boot.
 delete test_boot.
 
 if boot {
-	if reboot <> 0 {
-		if reboot = 1 {
-			list.
-			print "Proceed.".
-			print " ".
-		} else {
-			set reboot to "Runing autorun program:".
-			run tmp.
-			switch to 1.
-			set reboot to 2.
-			print "Program ended.".
-		}
-	} else {
-		log "toggle boot." to test_boot.
-	}	
+	declare parameter reboot.
 } else {
 	set reboot to 0.
 }
 
-if reboot = 0 {
+if reboot > 0 {
+	delete boot.
+	copy kosis_old_boot from 0.
+	rename file kosis_old_boot to boot.
+	delete kosis_old_boot from 0.
+}
+
+if reboot = 1 {
+	list.
+	print "Proceed.".
+	print " ".
+} else if reboot = 2 {
+	set boot to "Runing autorun program:".
+	run kosis_tmp.
+	print "Program ended.".
+	boot on.
+	switch to 1.
+
+} else if reboot = 0 {
 
 set file0 to "delete boot.".
 set file5 to "boot".
@@ -112,22 +116,22 @@ if boot {
 	switch to 1.
 	rename boot to kosis_old_boot.
 	copy kosis_old_boot to 0.
-	rename kosis_old_boot to boot.
-	if af = "" {set reboot to 1.} else set reboot to 2.
-	log "delete boot.copy kosis_old_boot from 0.rename kosis_old_boot to boot.delete kosis_old_boot from 0.set reboot to "+reboot+".switch to 0.run kosis." to boot.
-	if af <> "" {
-		log "delete tmp." to tmp.
-		set i to 1.
-		if v = 0 set v to 1.
-		until i > v {
-			log "switch to "+i+".list." to tmp.
-			set i to i + 1.
-		}
-		log "print reboot.switch to "+av+".run "+af+"." to tmp.
+	delete kosis_old_boot.
+
+	if ps
+		log "run presets." to boot.
+	if af = "" {
+		log "switch to0.run kosis(1)." to boot.
+	} else {
+		log "switch to0.run kosis(2)." to boot.
+		log "delete kosis_tmp.list.print boot.switch to "+av+".run "+af+"." to kosis_tmp.
 	}
+
+	log "toggle boot." to test_boot.
 	reboot.
 } else {
-	if ps run presets.
+	if ps
+		run presets.
 	if af <> "" {
 		print "run "+af+".".
 		log "delete tmp2.switch to "+av+".run "+af+"." to tmp2.
@@ -136,4 +140,4 @@ if boot {
 	}
 }
 
-}
+} // if reboot = 0

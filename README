@@ -9,7 +9,7 @@
 
             k-OS Initialisation System
 
-                   kOSis v1.3.6
+                   kOSis v1.3.7
 
 @@@@@@@@@@@@@@@@@@@@@
 @ Table of contents @
@@ -102,8 +102,7 @@ IV. CONFIG FILE DESCRIPTION
 program run during the initialisation so it follows kOS syntax. It uses custom
 programs that are created and deleted by the main kOSis executable. These
 commands can not be used anywhere else than the config file. There is no size
-limitation for the file (it is not copied to a local volume). It is possible
-to create subprograms and run then form then main config file.
+limitation for the file (it is not copied to a local volume).
     The first line of "kosis_cfg.txt"("switch to 1.") should in no case be
 modified. Just write your configurations bellow it.
 
